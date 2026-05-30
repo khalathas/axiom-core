@@ -8,7 +8,7 @@ const path = require('path'); //add path module
 const filename = path.basename(__filename); // for logging purposes
 const { loadConfig } = require('./config/config.js'); //import loadConfig function from config.js
 const { createPool } = require('./config/database.js'); //import createPool function from database.js
-const { log } = require('./utils.js'); //import log function from utils.js
+const { log } = require('./utils/logger.js'); //import log function from logger.js
 
 // execute main function
 main();
@@ -41,14 +41,14 @@ async function main() {
     log(filename,": Defining Routes");
 
     log(filename,": Defining SRD");
-    const srdRouter = require('./routes/srd');
-    log(filename,": Defining Health");
-    const healthRouter = require('./routes/health');
+    const rulesRouter = require('./routes/rules');
+    log(filename,": Defining System");
+    const systemRouter = require('./routes/system');
 
     //hook up routers
     log(filename,": Hooking up routes");
-    app.use('/srd', srdRouter); //srd functions
-    app.use('/api', healthRouter); //health check
+    app.use('/rules', rulesRouter); //rules functions
+    app.use('/api', systemRouter); //system functions
 
     // grab port as argument from commandline, else default to port in config file
     // note to self, add checking to ensure argv[2] is numeric in valid port range

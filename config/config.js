@@ -2,7 +2,7 @@ const fs = require('fs'); //add filesystem module
 const readline = require('readline'); //add readline input module for creating config
 const path = require('path'); //add path module
 const filename = path.basename(__filename); // for logging purposes
-const { log } = require('../utils.js'); //import log function from utils.js
+const { log } = require('../utils/logger.js'); //import log function from logger.js
 
 // define templates and structures
 // create config json template

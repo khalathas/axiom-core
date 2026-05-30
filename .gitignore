@@ -2,7 +2,9 @@ config.json
 config.json.heroku
 config.json.cronos
 node_modules/
+.env
 devnotes/
+output/
 .claude/
 api-endpoints-design.txt
 database-design.txt
