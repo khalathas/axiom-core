@@ -32,7 +32,13 @@ async function getById(req, res) {
 
 async function create(req, res) {
     const pool = req.app.locals.db;
+    const { name, source_book_id } = req.body;
+    if (!name) return res.status(400).json(errorResponse("MISSING_NAME", "Name is required"));
+    if (!source_book_id) return res.status(400).json(errorResponse("MISSING_SOURCE_BOOK", "Source Book ID is required"));
     try {
+        const result = await featModel.createFeat(pool, req.body);
+        const newFeat = await featModel.getFeatById(pool, result.insertId);
+        res.status(201).json(successResponse(newFeat[0]));
     } catch (err) {
         log(filename, err);
         res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
@@ -54,8 +60,12 @@ async function getByType(req, res) {
 
 async function updateById(req, res) {
     const pool = req.app.locals.db;
+    const { id } = req.params;
     try {
-
+        const result = await featModel.updateFeat(pool, id, req.body);
+        if (!result.affectedRows) return res.status(404).json(errorResponse("NOT_FOUND", "Feat not found."));
+        const updated = await featModel.getFeatById(pool, id);
+        res.json(successResponse(updated[0]));
     } catch (err) {
         log(filename, err);
         res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
@@ -64,8 +74,11 @@ async function updateById(req, res) {
 
 async function deleteById(req, res) {
     const pool = req.app.locals.db;
+    const { id } = req.params;
     try {
-
+        const result = await featModel.deleteFeat(pool, id);
+        if (!result.affectedRows) return res.status(404).json(errorResponse("NOT_FOUND", "Feat not found."));
+        res.json(successResponse(null, { message: "Feat deleted successfully" }));
     } catch (err) {
         log(filename, err);
         res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
