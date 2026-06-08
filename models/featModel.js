@@ -1,4 +1,6 @@
 const { executeQuery } = require('../utils/dbUtils');
+const PATCHABLE = ['name', 'feat_type', 'prerequisites', 'benefit', 'normal', 'special', 'description'];
+
 
 async function getFeats(pool) {
 
@@ -19,8 +21,34 @@ async function getFeatById(pool, id) {
     return executeQuery(pool,sql,params);
 }   
 
+async function getFeatsByType(pool, type) {
+    const sql = 'SELECT * FROM feats f where f.feat_type = ?';
+    const params = [type];
+    return executeQuery(pool,sql,params);
+}
+
+async function createFeat(pool, data) {
+
+    return executeQuery(pool,sql,params);
+}
+
+async function updateFeat(pool, id, data) {
+
+    return executeQuery(pool,sql,params);
+}
+
+async function deleteFeat(pool, id) {
+
+    return executeQuery(pool,sql,params);
+}
+
+
 
 module.exports = { 
     getFeats,
-    getFeatById 
+    getFeatById,
+    getFeatsByType,
+    createFeat,
+    updateFeat,
+    deleteFeat
 }

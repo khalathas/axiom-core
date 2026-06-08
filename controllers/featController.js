@@ -30,10 +30,47 @@ async function getById(req, res) {
     }
 }
 
-async function create() {}
-async function getByType() {}
-async function updateById() {}
-async function deleteById() {}
+async function create(req, res) {
+    const pool = req.app.locals.db;
+    try {
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
+
+async function getByType(req, res) {
+    const pool = req.app.locals.db;
+    const { type } = req.params;
+    try {
+        const data = await featModel.getFeatsByType(pool, type);
+        if (!data.length) return res.status(404).json(errorResponse("NOT_FOUND", `No feats found for type: ${type}`));
+        res.json(successResponse(data, { count: data.length }));
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
+
+async function updateById(req, res) {
+    const pool = req.app.locals.db;
+    try {
+
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
+
+async function deleteById(req, res) {
+    const pool = req.app.locals.db;
+    try {
+
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
 
 
 module.exports = { 
