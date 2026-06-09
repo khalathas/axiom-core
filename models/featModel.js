@@ -17,7 +17,7 @@ async function getFeatById(pool, id) {
 
     // build sql statement with variable placeholders
     const featSql = 'SELECT * FROM feats f where f.id = ?';
-    const prereqSql = `SELECT prereq_type, prereq_value, prereq_min, prereq_key, prereq_feat_id, prereq_skill_id FROM feat_prerequisites WHERE feat_id = ? ORDER BY id ASC`;
+    const prereqSql = `SELECT id, prereq_type, prereq_value, prereq_min, prereq_key, prereq_feat_id, prereq_skill_id FROM feat_prerequisites WHERE feat_id = ? ORDER BY id ASC`;
 
     const [feats, prereqs] = await Promise.all([
         executeQuery(pool, featSql, [id]),
