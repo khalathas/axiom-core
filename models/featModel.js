@@ -110,6 +110,7 @@ module.exports = {
     createFeat,
     updateFeat,
     deleteFeat,
+    getPrereqById,
     createPrereq,
     updatePrereqById,
     deletePrereqById
