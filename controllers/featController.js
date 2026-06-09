@@ -32,9 +32,10 @@ async function getById(req, res) {
 
 async function create(req, res) {
     const pool = req.app.locals.db;
-    const { name, source_book_id } = req.body;
+    const { name, source_book_id, benefit } = req.body;
     if (!name) return res.status(400).json(errorResponse("MISSING_NAME", "Name is required"));
     if (!source_book_id) return res.status(400).json(errorResponse("MISSING_SOURCE_BOOK", "Source Book ID is required"));
+    if (!benefit) return res.status(400).json(errorResponse("MISSING_BENEFIT", "Benefit is required"));
     try {
         const result = await featModel.createFeat(pool, req.body);
         const newFeat = await featModel.getFeatById(pool, result.insertId);
