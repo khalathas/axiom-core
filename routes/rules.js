@@ -51,9 +51,9 @@ rules.route('/skills/:id')
 
 // Book routes
 rules.route('/sourcebooks')
-    .get(referenceController.getAll);
+    .get(referenceController.getAllSourceBooks);
 
 rules.route('/sourcebooks/:id')
-    .get(referenceController.getById);
+    .get(referenceController.getSourceBookById);
 
 module.exports = rules
