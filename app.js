@@ -40,7 +40,7 @@ async function main() {
 
     log(filename,": Defining Routes");
 
-    log(filename,": Defining SRD");
+    log(filename,": Defining Rules");
     const rulesRouter = require('./routes/rules');
     log(filename,": Defining System");
     const systemRouter = require('./routes/system');
