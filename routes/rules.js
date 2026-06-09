@@ -6,6 +6,7 @@ const spellController = require('../controllers/spellController.js');
 const classController = require('../controllers/classController.js');
 const featController = require('../controllers/featController.js');
 const skillController = require('../controllers/skillController.js');
+const referenceController = require('../controllers/referenceController.js');
 
 // Spell routes
 rules.route('/spells')
