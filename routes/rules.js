@@ -48,8 +48,11 @@ rules.route('/skills')
 rules.route('/skills/:id')
     .get(skillController.getById);
 
-
 // Book routes
-// rules.route('/sourcebooks') // not ready yet
+rules.route('/sourcebooks')
+    .get(referenceController.getAll);
+
+rules.route('/sourcebooks/:id')
+    .get(referenceController.getById);
 
 module.exports = rules

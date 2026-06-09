@@ -7,7 +7,6 @@ async function getSkills(pool) {
     const params = [];
 
     return executeQuery(pool,sql,params);
-
 }
 
 async function getSkillById(pool, id) {
