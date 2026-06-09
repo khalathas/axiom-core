@@ -42,6 +42,13 @@ rules.route('/feats/:id')
     .patch(featController.updateById)
     .delete(featController.deleteById);
 
+rules.route('/feats/:id/prereqs')
+    .post(featController.addPrereq);
+
+rules.route('/feats/:id/prereqs/:prereqId')
+    .patch(featController.updatePrereqById)
+    .delete(featController.deletePrereqById);
+
 // Skill routes
 rules.route('/skills')
     .get(skillController.getAll);

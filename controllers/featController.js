@@ -86,6 +86,59 @@ async function deleteById(req, res) {
     }
 }
 
+async function addPrereq(req, res) {
+    const pool = req.app.locals.db;
+    const { id } = req.params;
+    const { prereq_type } = req.body;
+    if (!prereq_type) return res.status(400).json(errorResponse("MISSING_PREREQ_TYPE", "Prerequisite type is required"));
+    try {
+        const result = await featModel.createPrereq(pool, id, req.body);
+        const row = await featModel.getPrereqById(pool, result.insertId);
+        res.status(201).json(successResponse(row[0]));
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
+
+/* add/update prerequisite request body template:
+{
+  "prereq_type": "feat",
+  "prereq_value": "Familiar",
+  "prereq_min": null,
+  "prereq_key": null,
+  "prereq_feat_id": null,
+  "prereq_skill_id": null
+}
+*/
+
+
+async function updatePrereqById(req, res) {
+    const pool = req.app.locals.db;
+    const { id, prereqId } = req.params;
+    try {
+        const result = await featModel.updatePrereqById(pool, id, prereqId, req.body);
+        if (!result.affectedRows) return res.status(404).json(errorResponse("PREREQ_NOT_FOUND", "Prerequisite not found."));
+        const row = await featModel.getPrereqById(pool, prereqId);
+        res.json(successResponse(row[0]));
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
+    
+async function deletePrereqById(req, res) {
+    const pool = req.app.locals.db;
+    const { id, prereqId } = req.params;
+    try {
+        const result = await featModel.deletePrereqById(pool, id, prereqId);
+        if (!result.affectedRows) return res.status(404).json(errorResponse("PREREQ_NOT_FOUND", "Prerequisite not found."));
+        res.json(successResponse(null, { message: "Prerequisite deleted successfully" }));
+    } catch (err) {
+        log(filename, err);
+        res.status(500).json(errorResponse('DB_ERROR', 'Database error'));
+    }
+}
 
 module.exports = { 
     getAll,
@@ -93,5 +146,8 @@ module.exports = {
     create,
     getByType,
     updateById,
-    deleteById
+    deleteById,
+    addPrereq,
+    updatePrereqById,
+    deletePrereqById
 }
